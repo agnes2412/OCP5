@@ -30,8 +30,4 @@ body {
 	flex-wrap: wrap;
 }
 
-.photo_teddy {
-	width: 400px;
-	height: 400px;
-	object-fit: cover;
-}
+
