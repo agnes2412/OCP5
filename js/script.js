@@ -1,6 +1,4 @@
 
-
-
 //Array contenant les strings correspondants aux couleurs des Teddies
 let firstTeddyColors = [
 'Tan',
@@ -26,6 +24,10 @@ let fifthTeddyColors = [
 'Beige', 
 'Tan',
 'Chocolate'];
+
+var request = new XMLHttpRequest();
+request.open("GET", "http://localhost:3000/api/teddies");
+request.send();
 
 
 let teddyOne = {
@@ -63,6 +65,22 @@ let teddyFive = {
 	imageUrl: 'http://localhost:3000/images/teddy_5.jpg'
 };
 
+let teddies = ["Norbert", "Arnold", "Lenny and Carl", "Gustav", "Garfunkel"];
+let text = "";
+let i;
+for (i = 0; i < teddies.length; i++) {
+	text += "Les teddies sont" + " " + teddies[i] + "<br>"
+};
+
+let txt = "";
+let ted1 = {fname:"Norbert", price: 29, color:"Brown"};
+let x;
+for (x in ted1) {
+	txt += ted1[x] + " ";
+}
+document.getElementById('teddy1').innerHTML += txt;
+
+document.getElementById("teddies").innerHTML += text;
 
 teddyOne_name.innerHTML += "<p>"+teddyOne.name+"</p>";
 teddyOne_photo.innerHTML += "<img src='"+teddyOne.imageUrl+"'>";
@@ -74,3 +92,15 @@ teddyFour_name.innerHTML += "<p>"+teddyFour.name+"</p>";
 teddyFour_photo.innerHTML += "<img src='"+teddyFour.imageUrl+"'>";
 teddyFive_name.innerHTML += "<p>"+teddyFive.name+"</p>";
 teddyFive_photo.innerHTML += "<img src='"+teddyFive.imageUrl+"'>";
+
+document.getElementById('teddyOne_photo').style.border='10px solid black';
+document.getElementById('teddyTwo_photo').style.border='10px solid pink';
+document.getElementById('teddyThree_photo').style.border='10px solid violet';
+document.getElementById('teddyFour_photo').style.border='10px solid blue';
+document.getElementById('teddyFive_photo').style.border='10px solid red';
+
+let btnPanier = document.querySelectorAll('button');
+
+for(let i = 0; i < btnPanier.length ; i++) {
+  btnPanier[i].addEventListener('click', createParagraph);
+}
