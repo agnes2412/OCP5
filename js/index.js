@@ -27,11 +27,10 @@ function getAllTeddies() {
 	request.send();
 }
 
+//Exécute le javascript
 window.onload = getAllTeddies();
 
-//document.getElementById('teddies').innerHTML = response;
-
-//Récupération de la requête comprenant le nom, l'image, la description et le prix de chaque Teddy sous forme de liste
+//Récupération de la requête comprenant le nom, l'image, la description et le prix de chaque Teddy
 function teddies(response) {
 	let section = document.getElementById('teddies');
 	console.log('ok');
@@ -40,7 +39,7 @@ function teddies(response) {
 
 	for (let i = 0; i < response.length; i++) {
 		console.log('ok2');
-		//Ajout d'une div et création d'un cadre autour de chaque "teddy";
+		//Ajout d'un article et création d'un cadre autour de chaque "teddy";
 		let teddy = document.createElement('article');
 		teddy.style.textAlign = 'justify';
 		teddy.style.border = "1px solid #673ab7";

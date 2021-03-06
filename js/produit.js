@@ -1,7 +1,5 @@
 
-
-
-let header  = document.createElement('header');
+let header  = document.getElementById('header');
 header.innerHTML = '<ul><li>Accueil</li><li>Panier</li></ul>';
 console.log('ok');
 
@@ -19,20 +17,21 @@ function getTeddy() {
 			teddy(response);
 		}
 	};
-	console.log('ok1');
+	
 	//Ouverture de l'URL avec la méthode 'GET'
-	request.open('GET', 'http://localhost:3000/api/teddies/:_id');
+	request.open('GET', 'http://localhost:3000/api/teddies' + id);
 	//Envoi de la requête au service web
 	request.send();
 }
-console.log('ok2');
+
 window.onload = getTeddy();
+console.log('ok');
 
 //document.getElementById('teddies').innerHTML = response;
 
 function teddy(response) {
 	let section1 = document.getElementById('teddy');
-	console.log('ok')
+	console.log('ok1')
 
 	document.getElementById('teddy').style.border = '5px solid violet';
 
