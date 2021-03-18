@@ -1,4 +1,5 @@
 
+
 //Array contenant les strings correspondants aux couleurs des Teddies
 let firstTeddyColors = [
 'Tan',
