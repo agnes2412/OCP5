@@ -1,5 +1,3 @@
-
-//let colorSelected = '';
 //récupération de l'id dans l'URL pour le stocker dans une variable
 let QUERYSTRING = window.location.search;
 let URLPARAMETERS = new URLSearchParams(QUERYSTRING);
@@ -7,14 +5,14 @@ let ID = URLPARAMETERS.get('id');
 console.log(ID);
 let API_URL = "http://localhost:3000/api/teddies/";
 
-//Création d'une fonction 'getTeddy' pour récupérer d'Id de chaque Teddy
+//Création d'une fonction 'getTeddy' pour récupérer les données de l'Id du Teddy
 function getTeddy() {
 
 	//Création et envoi d'une requête avec l'objet XMLHttpRequest
 	let request = new XMLHttpRequest();
 
 	request.onreadystatechange = function () {
-		//Tant qu'il y a des images et que le statut est bon, envoi des données
+		//Tant que l'état de la requête et le statut sont bons, envoi des données
 		if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
 			//création d'une variable 'response' (fichier responseText)
 			let response = JSON.parse(this.responseText);
@@ -23,15 +21,15 @@ function getTeddy() {
 		}
 	};
 
-	//Ouverture de l'URL avec la méthode 'GET'
+	//Récupération de l'id avec la méthode 'GET' (concaténation de l'URL de l'API et de l'id) 
 	request.open('GET', API_URL + ID);
 	//Envoi de la requête au service web
 	request.send();
+	console.log(request);
 }
 
 //Exécute le JavaScript
 window.onload = getTeddy();
-console.log('ok1');
 
 //Affiche les données du teddy sélectionné
 function displayTeddySelected(response) {
@@ -49,36 +47,32 @@ function displayTeddySelected(response) {
 		"<select id='select'>" +
 		"</select>" +
 		"<p>Prix : " +
-		response.price +
+		response.price/100 + " €" +
 		"</p>" +
 		"<button id='button'>Ajoutez au panier + <span id='ajout_panier'>0</span></button>" +
 		"</div>";
 
-
-	/*function affichColor(event) {
-		let resultColor = document.getElementById('result_color');
-		resultColor.innerHTML = event.target.value;
-	}*/
-
 	for (let i = 0; i < response.colors.length; i++) {
 		select.innerHTML +=
 			"<option value = '" + response.colors[i] + "'>" + response.colors[i] + "</option>";
+			//console.log pour le test unitaire
+			console.log(response.colors[i]);
 	}
-	//Ecoute de l'évènement pour récupérer la couleur choisie et l'afficher dans l'id "result_color"
-	//let select = document.getElementById('select');
 
 	//Récupération des teddies sélectionnés par l'écouteur d'évènement
-	document.getElementById('button').addEventListener('click', function() {
+	document.getElementById('button').addEventListener('click', myFonction);
+	function myFonction() {
+		let ajoutPanier = document.getElementById('ajout_panier');
+		ajoutPanier.innerHTML++;
 		//Appel de la fonction addTeddyToBasket pour récupérer le panier et son contenu
 		addTeddyToBasket();
-	});
+	};
 };
-
 
 //Création d'une fonction pour stocker dans le localStorage les teddies sélectionnés
 function addTeddyToBasket() {
 
-//Je transforme la chaine de caractères en tableau JSON pour pouvoir l'exploiter
+	//Je transforme la chaine de caractères en tableau JSON pour pouvoir l'exploiter
 	let panier = JSON.parse(localStorage.getItem('Panier'));
 	//Si panier n'existe pas, je crée un tableau vide
 	if (panier === null) {
@@ -88,33 +82,13 @@ function addTeddyToBasket() {
 	panier.push(ID);
 	//Je transforme le tableau en chaine de caractère
 	localStorage.setItem('Panier', JSON.stringify(panier));
-
 };
 
-//récupération de l'id dans l'URL pour le stocker dans une variable
-/*let QUERYSTRING = window.location.search;
-let URLPARAMETERS = new URLSearchParams(QUERYSTRING);
-let ID = URLPARAMETERS.get('id');
 
-let API_URL = "http://localhost:3000/api/teddies/";
-
-//Création et envoi d'une requête avec l'objet XMLHttpRequest
-let request = new XMLHttpRequest();
-
-request.onreadystatechange = function () {
-	//Tant qu'il y a des images et que le statut est bon, envoi des données
-	if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-		//création d'une variable 'response' (fichier responseText)
-		let response = JSON.parse(this.responseText);
-		console.log(response);
-		addToTeddyBasket(response);
-	}
-};
-
-//Ouverture de l'URL avec la méthode 'GET'
+/*//Ouverture de l'URL avec la méthode 'GET'
 request.open('GET', API_URL + ID);
 //Envoi de la requête au service web
-request.send();
+request.send();*/
 
 
 	//let panierProduct = []
@@ -205,3 +179,16 @@ request.onreadystatechange = function() {
 //let weatherResult = document.getElementById('weather-result');
 
 weatherResult.innerHTML = askWeather;*/
+
+//let colorSelected = '';
+	/*function affichColor(event) {
+		let resultColor = document.getElementById('result_color');
+		resultColor.innerHTML = event.target.value;
+	}*/
+	//Ecoute de l'évènement pour récupérer la couleur choisie et l'afficher dans l'id "result_color"
+	//let select = document.getElementById('select');
+
+
+	//document.getElementById('button').addEventListener('click', function () {
+
+	//addTeddyToBasket();

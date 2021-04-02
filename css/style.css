@@ -81,3 +81,11 @@ label, input {
 }
 
 label {padding-right: 10px;}
+
+.donnees_non_conforme {
+	  color: red;
+  }
+
+#container_teddy_selectionne {
+	 border: 1px, solid, violet;
+ } 
