@@ -1,52 +1,30 @@
-//Création des titres
+//Création des titres de la page d'accueil
 let element = document.getElementById('presentation');
 element.innerHTML += '<h1>Orinoco vous présente sa sélection "Oripeluche". Une collection d\'ours en peluche faits à la main.</h1>';
 element.innerHTML += '<h2>Faites votre choix, personnalisez votre "Teddy" et passez votre commande.</h2>';
 
-//Création d'une fonction "getAllTeddies" pour récupérer les données de l'API
+//Création d'une fonction "getAllTeddies" pour récupérer les produits de l'API
 function getAllTeddies() {
-
-const promesse1 = fetch('http://localhost:3000/api/teddies');
-promesse1.then((response) => {
-	console.log(response);
-	const teddiesList = response.json();
-	console.log(teddiesList);
-	teddiesList.then((response) => {
-		affichageTeddies(response);	
-	});
-})
-	.catch((erreur) => {
-		console.log(erreur);
-	});
-	
-
-/*//Création d'une requête de type XMLHttpRequest (AJAX) 
-let request = new XMLHttpRequest();
-//Le mot clé 'this' de onreadystatechange permet d'accéder aux propriétés 'readyState' et 'status'
-request.onreadystatechange = function () {
-	//Tant que l'état de la requête et le statut sont bons, envoi des données
-	if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-		//création d'une variable 'response' (fichier responseText) 
-		//et transformation du format Json en objet JavaScript
-		let response = JSON.parse(this.responseText);
-		console.log(response);
-		//Appel de la fonction 'teddies'  
-		teddies(response);
+	//Transmision de l'URL au serveur
+	fetch("http://localhost:3000/api/teddies")
+        //Je demande en retour le contenu de l'API (response)
+		//Dès qu'il y a le retour, transformation en format JSON
+        .then(response => response.json())
+		//J'appelle ma fonction 'display Teddies' pour afficher ce retour passé en paramètre (response)
+        .then(response => {
+			console.log(response);
+            displayTeddies(response);
+        })
+		.catch((erreur) => {
+			console.log(erreur);
+		});
 	}
-};
-
-//Ouverture d'une connexion vers un service web avec la méthode 'GET' et l'URL 
-request.open('GET', 'http://localhost:3000/api/teddies');
-//Envoi de la requête au service web
-request.send();*/
-
-}
 
 //Exécute le javascript
 window.onload = getAllTeddies();
 
 //Récupération de la requête comprenant le nom, l'image, la description et le prix de chaque Teddy
-function affichageTeddies(response) {
+function displayTeddies(response) {
 	let section = document.getElementById('teddies');
 
 	for (let i = 0; i < response.length; i++) {
@@ -70,21 +48,4 @@ function affichageTeddies(response) {
 		console.log(response[i].name);
 	}
 }
-
-/* section.innerHTML +=
-	"<div>" +
-	"<h3>" +
-	response[i].name +
-	"</h3>" +
-	"<img width='300px' src='" + response[i].imageUrl + "'>" +
-	"<p>" +
-	response[i].description +
-	"</p>" +
-	"<p>" +
-	response[i].price +
-	"</p>" +
-	"<a href='produit.html?id=" + response[i]._id + "'>Voir le produit</a>"
-"</div>"; */
-
-
 

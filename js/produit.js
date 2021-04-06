@@ -5,34 +5,24 @@ let ID = URLPARAMETERS.get('id');
 console.log(ID);
 let API_URL = "http://localhost:3000/api/teddies/";
 
-//Création d'une fonction 'getTeddy' pour récupérer les données de l'Id du Teddy
+//Création d'une fonction 'getTeddy' pour récupérer les données de l'Id de chaque Teddy
 function getTeddy() {
-
-	//Création et envoi d'une requête avec l'objet XMLHttpRequest
-	let request = new XMLHttpRequest();
-
-	request.onreadystatechange = function () {
-		//Tant que l'état de la requête et le statut sont bons, envoi des données
-		if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-			//création d'une variable 'response' (fichier responseText)
-			let response = JSON.parse(this.responseText);
+	fetch(API_URL + ID)
+		.then(response => response.json())
+		.then(response => {
 			console.log(response);
-			displayTeddySelected(response);
-		}
-	};
-
-	//Récupération de l'id avec la méthode 'GET' (concaténation de l'URL de l'API et de l'id) 
-	request.open('GET', API_URL + ID);
-	//Envoi de la requête au service web
-	request.send();
-	console.log(request);
+			displayTeddy(response);
+		})
+		.catch((erreur) => {
+			console.log(erreur);
+		});
 }
 
 //Exécute le JavaScript
 window.onload = getTeddy();
 
 //Affiche les données du teddy sélectionné
-function displayTeddySelected(response) {
+function displayTeddy(response) {
 	let sectionAffichageTeddy = document.getElementById('affich_teddy_selectionne');
 
 	sectionAffichageTeddy.innerHTML +=
@@ -47,16 +37,16 @@ function displayTeddySelected(response) {
 		"<select id='select'>" +
 		"</select>" +
 		"<p>Prix : " +
-		response.price/100 + " €" +
+		response.price / 100 + " €" +
 		"</p>" +
-		"<button id='button'>Ajoutez au panier + <span id='ajout_panier'>0</span></button>" +
+		"<button id='button'>Ajoutez au panier <span id='ajout_panier'>0</span></button>" +
 		"</div>";
 
 	for (let i = 0; i < response.colors.length; i++) {
 		select.innerHTML +=
 			"<option value = '" + response.colors[i] + "'>" + response.colors[i] + "</option>";
-			//console.log pour le test unitaire
-			console.log(response.colors[i]);
+		//console.log pour le test unitaire
+		console.log(response.colors[i]);
 	}
 
 	//Récupération des teddies sélectionnés par l'écouteur d'évènement
@@ -181,10 +171,10 @@ request.onreadystatechange = function() {
 weatherResult.innerHTML = askWeather;*/
 
 //let colorSelected = '';
-	/*function affichColor(event) {
-		let resultColor = document.getElementById('result_color');
-		resultColor.innerHTML = event.target.value;
-	}*/
+/*function affichColor(event) {
+	let resultColor = document.getElementById('result_color');
+	resultColor.innerHTML = event.target.value;
+}*/
 	//Ecoute de l'évènement pour récupérer la couleur choisie et l'afficher dans l'id "result_color"
 	//let select = document.getElementById('select');
 

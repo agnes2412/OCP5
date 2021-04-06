@@ -3,11 +3,6 @@ body {
 	width: 100%;
 	height: auto;
 }
-
-.bloc-page {
-	margin: 10px;
-}
-
 .logo {
 	width: 200px;
 	height: auto;
@@ -80,12 +75,23 @@ label, input {
 	margin-bottom: 20px;
 }
 
-label {padding-right: 10px;}
+label {
+	padding-right: 10px;
+}
 
 .donnees_non_conforme {
 	  color: red;
   }
 
-#container_teddy_selectionne {
+#result_teddy_selectionne {
 	 border: 1px, solid, violet;
  } 
+ 
+ form textarea{
+	padding:10px;
+	margin-bottom:5px;
+ }
+
+ button {
+	 margin-bottom: 30px;;
+ }
