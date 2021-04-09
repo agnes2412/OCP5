@@ -1,36 +1,40 @@
-//récupération de l'id dans l'URL pour le stocker dans une variable
+//Récupération de l'id dans l'URL 
 let QUERYSTRING = window.location.search;
 let URLPARAMETERS = new URLSearchParams(QUERYSTRING);
+//Pour le stocker dans une variable
 let ID = URLPARAMETERS.get('id');
-console.log(ID);
 let API_URL = "http://localhost:3000/api/teddies/";
 
 //Création d'une fonction 'getTeddy' pour récupérer les données de l'Id de chaque Teddy
 function getTeddy() {
+	//Transmision de l'URL et de l'id au serveur
 	fetch(API_URL + ID)
+		//Dès qu'il y a le retour, transformation en format JSON
 		.then(response => response.json())
 		.then(response => {
 			console.log(response);
+			//Appel de la fonction pour afficher le produit
 			displayTeddy(response);
 		})
-		.catch((erreur) => {
-			console.log(erreur);
-		});
+		//Si la requête n'aboutit pas
+		.catch(error => {
+			console.error(error)
+			document.getElementById('erreur_serveur').innerHTML = "Suite à un problème de serveur, la requête ne peut aboutir";
+			console.log(document.getElementById('erreur_serveur'));
+		})
 }
 
-//Exécute le JavaScript
+//Permet le chargement et l'exécution de la fonction
 window.onload = getTeddy();
 
-//Affiche les données du teddy sélectionné
+//Affiche les données de l'élément passé en paramètre (le teddy)
 function displayTeddy(response) {
-	let sectionAffichageTeddy = document.getElementById('affich_teddy_selectionne');
-
-	sectionAffichageTeddy.innerHTML +=
+	document.getElementById('affich_teddy_selectionne').innerHTML +=
 		"<div>" +
 		"<h3>" +
 		response.name +
 		"</h3>" +
-		"<img width=600px src='" + response.imageUrl + "'>" +
+		"<img width=100% src='" + response.imageUrl + "'>" +
 		"<p>" +
 		response.description +
 		"</p>" +
@@ -39,27 +43,25 @@ function displayTeddy(response) {
 		"<p>Prix : " +
 		response.price / 100 + " €" +
 		"</p>" +
-		"<button id='button'>Ajoutez au panier <span id='ajout_panier'>0</span></button>" +
+		"<button id='button'>Ajoutez au panier </button>" +
+		"<p id='alerte_ajout_panier'></p>" +
 		"</div>";
 
 	for (let i = 0; i < response.colors.length; i++) {
 		select.innerHTML +=
 			"<option value = '" + response.colors[i] + "'>" + response.colors[i] + "</option>";
-		//console.log pour le test unitaire
-		console.log(response.colors[i]);
 	}
 
 	//Récupération des teddies sélectionnés par l'écouteur d'évènement
 	document.getElementById('button').addEventListener('click', myFonction);
 	function myFonction() {
-		let ajoutPanier = document.getElementById('ajout_panier');
-		ajoutPanier.innerHTML++;
 		//Appel de la fonction addTeddyToBasket pour récupérer le panier et son contenu
 		addTeddyToBasket();
+		document.getElementById("alerte_ajout_panier").innerHTML = "Votre produit a bien été ajouté au panier!";
 	};
 };
 
-//Création d'une fonction pour stocker dans le localStorage les teddies sélectionnés
+//Création d'une fonction pour stocker les teddies sélectionnés dans le localStorage
 function addTeddyToBasket() {
 
 	//Je transforme la chaine de caractères en tableau JSON pour pouvoir l'exploiter
@@ -75,110 +77,3 @@ function addTeddyToBasket() {
 };
 
 
-/*//Ouverture de l'URL avec la méthode 'GET'
-request.open('GET', API_URL + ID);
-//Envoi de la requête au service web
-request.send();*/
-
-
-	//let panierProduct = []
-
-	//Stockage du produit récupéré avec localStorage
-	//Vérifie la prise en charge du navigateur
-/*if (typeof (storage) !== "undefined" {
-	//Si la prise en charge est définit, on stocke
-	localStorage.setItem("http://localhost:3000/api/teddies/" + id);
-	//et on récupère
-	document.getElementById("basket") = localstorage.getItem("http://localhost:3000/api/teddies/");
-} else {
-	document.getElementById("basket").innerHTML = "Désolé, votre navigateur ne prend pas en charge le stockage web";
-}
-
-
-
-/*Exemple de mise en pratique de addEventListener qui montre comment afficher un nombre de clics
-let parent = document.getElementById('parent');
-parent.addEventListener('click', myFonction);
-function myFonction() {
-let parentCount = document.getElementById('parent-count');
-parentCount.innerHTML ++
-};
-
-let child = document.getElementById('child');
-child.addEventListener('click', mySecondFonction);
-function mySecondFonction(event) {
-event.stopPropagation();
-event.preventDefault();
-let childCount = document.getElementById('child-count');
-childCount.innerHTML ++;
-};
-
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="base.css">
-</head>
-<body>
-<article id="parent">
-  <a class="link" id="child" href="#">Cliquez ici</a>
-  <p>Battle d'événement !</p>
-  Parent : <span id="parent-count">0</span>
-  Enfant : <span id="child-count">0</span>
-</article>
-
-<script type="text/javascript" src="index.js"></script>
-</body>
-</html>
-
-//Savoir quand le contenu change
-let name = document.getElementById('name');
-name.addEventListener('change', affichName);
-function affichName (event) {
-let resName = document.getElementById('res-name');
-resName.innerHTML = event.target.value;
-};
-
-let gender = document.getElementById('gender');
-gender.addEventListener('change', affichGender);
-function affichGender (event) {
-let resGender = document.getElementById('res-gender');
-resGender.innerHTML = event.target.value;
-};
-let result = document.getElementById('result');
-result.addEventListener('mousemove', affichResult);
-function affichResult(e) {
-const x = event.offsetX;
-const y = event.offsetY;
-var coor = "Coordinates: (" + x + "," + y + ")";
-result.innerHTML = coor;
-};
-
-function askWeather()  {
-
-let request = new XMLHttpRequest();
-request.onreadystatechange = function() {
-
-   if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-		let response = JSON.parse(this.responseText);
-		console.log(response.current_condition.condition);
-	}
-}
-  request.open("GET", "http://url-service-web.com/api/users");
-  request.send();
-}
-
-//let weatherResult = document.getElementById('weather-result');
-
-weatherResult.innerHTML = askWeather;*/
-
-//let colorSelected = '';
-/*function affichColor(event) {
-	let resultColor = document.getElementById('result_color');
-	resultColor.innerHTML = event.target.value;
-}*/
-	//Ecoute de l'évènement pour récupérer la couleur choisie et l'afficher dans l'id "result_color"
-	//let select = document.getElementById('select');
-
-
-	//document.getElementById('button').addEventListener('click', function () {
-
-	//addTeddyToBasket();

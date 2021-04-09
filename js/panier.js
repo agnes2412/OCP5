@@ -4,6 +4,7 @@ let panier;
 
 //Pour récupérer les références des teddies sélectionnés du panier dans le localStorage ///////////////////////////////
 function initialisation() {
+    //Je transforme la chaine de caractères en tableau JSON pour pouvoir l'exploiter
     panier = JSON.parse(localStorage.getItem('Panier'));
     if (panier === null) {
         panier = [];
@@ -15,88 +16,76 @@ function initialisation() {
         console.log(panier[i], i);
         console.log('ok');
     }
-    /*window.addEventListener('load', function (event) {
-        event.preventDefault();
-        for (let i = 0; i < panier.length; i++) {
-            //document.getElementsByClassName('btn_remove_teddy' + i).addEventListener('click', removeTeddy(i));
-            console.log(document.getElementsByClassName('btn_remove_teddy' + i));
-        }
-    })*/
 }
 
 //Récupération les données de chaque Teddy du panier
 function getDataTeddiesBasket(ID, i) {
-
     fetch(API_URL + ID)
         .then(response => response.json())
         .then(response => {
             console.log(response);
+            //J'afiche la réponse de l'index(i) positionné dans le tableau
             displayBasket(response, i);
         })
-        .catch((erreur) => {
-            console.log(erreur);
-        });
-    //document.getElementById('btn_remove_teddy' + i).addEventListener('click', removeTeddy());
+        //Si la requête n'aboutit pas
+        .catch(error => {
+            console.error(error)
+            document.getElementById('erreur_serveur').innerHTML = "Suite à un problème de serveur, la requête ne peut aboutir";
+            console.log(document.getElementById('erreur_serveur'));
+        })
 }
 
 //Exécute le javascript
 window.onload = initialisation();
 
+//Si le panier est vide
+if (panier == 0) {
+    let panierVide = document.getElementById('panier_vide');
+    panierVide.innerHTML += "Votre panier est vide !";
+} 
+
 //Pour afficher le contenu du panier/////////////////////////////////////////////////////////////////
 function displayBasket(ID, i) {
-    let affichageName = document.getElementById('result_teddy_selectionne');
-    ///J'additionne chacun des prix des élément du panier
-    total += ID.price;
-    affichageName.innerHTML +=
-        "<div>" +
-        ID.name +
-        "</div>" +
-        "<img width=100px src='" + ID.imageUrl + "'>" +
-        "<div>" +
-        ID.price / 100 + " €" +
-        "</div>" +
-        "<button id='btn_remove_teddy" + i + "'>Supprimer le teddy</button>";
-    let affichTotal = document.getElementById('result_order');
+
+        let displayTeddy = document.getElementById('result_teddy_selectionne');
+        displayTeddy.innerHTML +=
+            "<div>" +
+            ID.name +
+            "</div>" +
+            "<img width=150px src='" + ID.imageUrl + "'>" +
+            "<div>" +
+            ID.price / 100 + " €" +
+            "</div>" +
+            //(i) est le curseur qui va se positionner sur l'élément pour le supprimer()
+            "<button id='btn_remove_teddy" + i + "'>Supprimer le teddy</button>";
     
-    affichTotal.innerHTML = total / 100 + " €";
-    for(let y = 0; y < panier.length; y++) { 
+    //J'additionne chacun des prix des éléments du panier pour calculer le total
+    total += ID.price;
+    console.log(total / 100 + " €");
+    document.getElementById('result_order').innerHTML = total / 100 + " €";
+    
+    //Je stocke le total dans le localStorage pour le récupérer sur la page commande
+    localStorage.setItem('TotalOrder', total);
+
+    //Je vérifie si il y a des éléments dans le panier
+    for (let y = 0; y < panier.length; y++) {
         let element = document.getElementById('btn_remove_teddy' + y);
-        if(element) {
-            element.addEventListener('click', function() {
-                supprimTeddy(y);
+        //S'il existe un élément dans le panier, je le cible 
+        if (element) {
+            //Avec un écouteur d'évènement, au clic j'appelle la fonction pour le supprimer
+            element.addEventListener('click', function () {
+                removeTeddy(y);
             })
         }
     }
-    //console.log(ID, i);
-}
-
-// Pour calculer le total du panier//////////////////////////////////////////////////////////////////////////
-function calculTotal() {
-    //J'initialise la variable 'totalPanier' à 0
-    let totalPanier = 0;
-    //Récupération des références dans le localStorage 
-    //panier = JSON.parse(localStorage.getItem('Panier'));
-    //Avec la boucle for, je parcours l'objet localStorage ('panier') pour récupérer le prix des éléments 'i' du tableau et je les incrémente
-    for (let i = 0; i < panier.length; i++) {
-        //A chaque tour de boucle avec le +=, je rajoute le prix de l'élément selectionné
-        totalPanier += [i].price;
-        console.log(totalPanier);
-    }
-
-    //Je crée une variable que je place dans d'id correspondant au total du panier
-    let affichagePrixTotal = document.getElementById('result_order');
-    //J'appelle le résultat du tableau 'totalPanier' pour l'afficher
-    affichagePrixTotal.innerHTML =
-        "<p>Le total : " +
-        totalPanier.price +
-        "</p>";
 }
 
 //Pour supprimer un teddy du panier///////////////////////////////////////////////////////////////////////////
-
-function supprimTeddy(i) {
+function removeTeddy(i) {
     panier.splice(i, 1);
-    localStorage.setItem('Panier', JSON.stringify(panier))
+    //Je mets à jour mon panier
+    localStorage.setItem('Panier', JSON.stringify(panier));
+    //Je recharge la page
     document.location.reload(true);
 }
 
@@ -120,7 +109,7 @@ function clearBasket(event) {
 
 //Ajout d'un écouteur d'évènement à mon bouton d'envoi
 document.getElementById('btn_envoi').addEventListener('click', formulaire);
-//Je crée un objet 'contact' pour récupérer les valeurs de chaque champs
+//Je crée un objet 'contact' 
 let contact;
 
 function formulaire(event) {
@@ -129,10 +118,10 @@ function formulaire(event) {
     let firstNameNoConform = document.getElementById('firstName_no_conform');
     let firstNameValid = /^[A-zÀ-ù-'-\s]{2,30}$/;
     if (firstName === "" || firstNameValid.test(firstName.value) === false) {
-        firstNameNoConform.textContent = " Veuillez renseigner votre prénom et respecter le format requis";
+        firstNameNoConform.innerHTML = " Veuillez renseigner votre prénom et respecter le format requis";
         return false;
     } else {
-        firstNameNoConform.textContent = " ✔";
+        firstNameNoConform.innerHTML = " ✔";
     }
 
     //Pour la validation du nom/////////////////////////////////////////////////////////////////
@@ -140,17 +129,17 @@ function formulaire(event) {
     let lastNameValid = /^[A-zÀ-ù-'-\s]{2,30}$/;
     //Si les données ne sont pas saisies ou ne correspondent au Regex prédéfini
     if (lastName === "" || lastNameValid.test(lastName.value) === false) {
-        lastNameNoConform.textContent = " Veuillez renseigner votre nom et respecter le format requis";
+        lastNameNoConform.innerHTML = " Veuillez renseigner votre nom et respecter le format requis";
         return false;
     } else {
-        lastNameNoConform.textContent = " ✔";
+        lastNameNoConform.innerHTML = " ✔";
     }
 
     //Pour la validation de l'adresse//////////////////////////////////////////////////////////////////////
     let addressNoConform = document.getElementById('address_no_conform');
     let addressValid = /^[A-zÀ-ù-0-9-'-\s]{2,100}$/;
     if (address === "" || addressValid.test(address.value) === false) {
-        addressNoConform.textContent = " Veuillez renseigner votre adresse et respecter le format requis";
+        addressNoConform.innerHTML = " Veuillez renseigner votre adresse et respecter le format requis";
         return false;
     } else {
         //Si tout est correct
@@ -162,7 +151,7 @@ function formulaire(event) {
     let cityValid = /^[A-zÀ-ù-'-\s]{2,30}$/;
     if (city === "" || cityValid.test(city.value) === false) {
 
-        cityNoConform.textContent = " Veuillez renseigner votre ville et respecter le format requis";
+        cityNoConform.innerHTML = " Veuillez renseigner votre ville et respecter le format requis";
         return false;
     } else {
         //Si tout est correct, validation
@@ -173,13 +162,20 @@ function formulaire(event) {
     let emailNoConform = document.getElementById('email_no_conform');
     let emailValid = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
     if (email === "" || emailValid.test(email.value) === false) {
-        emailNoConform.textContent = " Veuillez renseigner votre email et respecter le format requis";
+        emailNoConform.innerHTML = " Veuillez renseigner votre email et respecter le format requis";
         return false;
     } else {
         emailNoConform.innerHTML = " ✔";
     }
-    //Si tous les champs du formulaire sont corrects, validation
-    alert('votre commande a bien été envoyée');
+
+    if (panier == 0) {
+        let alertPanierVide = document.getElementById('alerte_panier_vide');
+        alertPanierVide.innerHTML = "Veuillez remplir votre panier avant de valider votre commande !";
+        return false;
+    }
+
+    //Si tous les champs du formulaire sont corrects et que le panier n'est pas vide, validation
+    //Dans mon objet 'contact', je récupère les valeurs de chaque champs du formulaire
     contact = {
         firstName: document.getElementById('firstName').value,
         lastName: document.getElementById('lastName').value,
@@ -220,7 +216,7 @@ function sendData(commande) {
     //Je transmets l'URL et l'objet 'options' au serveur
     fetch("http://localhost:3000/api/teddies/order", options)
         //Utilisation des promesses
-        //Dès qu'il y a une réponse (confirmation de la commande) + transformation en format JSON
+        //Dès qu'il y a une réponse (confirmation de la commande), transformation en format JSON
         .then(response => response.json())
         //Avec cette réponse transformée en format JSON
         .then(response => {
@@ -232,8 +228,11 @@ function sendData(commande) {
             console.log(response);
             //Je renvoie le numéro de commande vers ma page de commande
             window.location.replace('./commande.html');
-            //formulaire();
         })
-        //Si la requête n'aboutit pas, j'affiche un message d'erreur
-        .catch(error => console.error(error))
+        //Si la requête n'aboutit pas
+        .catch(error => {
+            console.error(error)
+            document.getElementById('erreur_commande').innerHTML = "Suite à un problème de serveur, votre commande n'a pas pu être enregistrée";
+            console.log(document.getElementById('erreur_serveur'));
+        })
 };

@@ -1,21 +1,16 @@
 
 body {
 	width: 100%;
-	height: auto;
+	margin: auto;
 }
+
+.bloc-page {
+	margin: 5px;
+	padding-bottom: 40px;;
+}
+
 .logo {
 	width: 200px;
-	height: auto;
-}
-
-.banniere {
-	width: 100%;
-	height: 300px;
-}
-
-.banniere__teddy {
-	object-fit: cover;
-	width: 300px;
 	height: auto;
 }
 
@@ -26,30 +21,53 @@ body {
 }
 
 article {
-	border: 1px solid #673ab7;
+	border: 1px solid #ac96d4;
 	text-align: justify;
 	margin: 10px;
-	padding: 5px;
+	padding: 10px;
 	width: 400px;
 	height: 480px;
-	box-shadow: 4px 4px 4px 1px #ac96d4;
+	border-radius: 30px;
+	box-shadow: 4px 4px 4px 3px #ac96d4;
 }
 
 article img {
-	width: 90%;
-	display: block;
-	flex-wrap: wrap;
+	width: 100%;
+	height: 250px;
+	object-fit: contain;
+	/*display: block;
+	flex-wrap: wrap;*/
 	margin: auto;
 }
 
-#presentation h1 {
+h1 {
 	color: #673ab7;
 	font-size: 2em;
 	text-align: center;
 }
 
-#presentation h2 {
+h2 {
 	text-align: center;
+	color:rgb(178, 98, 243);
+}
+
+p {
+	font-size: 1.1em;	
+}
+
+#container_teddy_selectionne {
+	padding: 10px;
+}
+
+#container_teddy_selectionne p {
+	font-size: 1.3em;
+}
+
+
+#affich_teddy_selectionne {
+	border: 5px solid violet;
+	padding: 5px;
+	margin: 5px;
 }
 
 #select {
@@ -57,17 +75,30 @@ article img {
 	margin-bottom: 10px;;
 }
 
+#alerte_ajout_panier {
+	font-size: 1.4em;
+	text-align: center;
+	color:rgb(141, 12, 246);
+}
+
 #ajout_panier {
 	padding: 5px;
+}
+
+#panier_vide {
+	font-size: 2em;
+	color: rgb(119, 24, 119);
+}
+
+#vider_panier {
+	width: 130px;
+	height: 50px;
+	text-align: center;
 }
 
 #container {
 	display: table;
 	justify-content: space-between;
-}
-
-.container_form {
-	display: table-row;
 }
 
 label, input {
@@ -82,16 +113,38 @@ label {
 .donnees_non_conforme {
 	  color: red;
   }
-
-#result_teddy_selectionne {
-	 border: 1px, solid, violet;
- } 
  
- form textarea{
-	padding:10px;
-	margin-bottom:5px;
+ input {
+	width: 25em;
+	height: 2em;
  }
 
  button {
-	 margin-bottom: 30px;;
+	 margin-bottom: 30px;
+ }
+
+ #aucune_connexion {
+	 font-size: 2em;
+	 color: red;
+ }
+
+ #mauvaise_reponse_reseau {
+	 font-size: 2em;
+	 color:orange;
+ }
+
+ #alerte_panier_vide {
+	 font-size: 2em;
+	 color: rgb(200, 48, 238);
+ }
+
+ #btn_envoi {
+	width: 180px;
+	height: 50px;
+	margin-top: 50px;
+ }
+
+ #confirmation_commande {
+	 font-size: 1.3em;
+	 color : rgb(82, 17, 82);
  }
