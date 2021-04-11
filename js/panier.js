@@ -2,19 +2,18 @@ let API_URL = "http://localhost:3000/api/teddies/";
 let total = 0;
 let panier;
 
-//Pour récupérer les références des teddies sélectionnés du panier dans le localStorage ///////////////////////////////
+//Récupération des références des teddies sélectionnés du panier dans le localStorage ///////////////////////////////
 function initialisation() {
-    //Je transforme la chaine de caractères en tableau JSON pour pouvoir l'exploiter
+    //Transformation de la chaine de caractères en tableau pour pouvoir l'exploiter
     panier = JSON.parse(localStorage.getItem('Panier'));
+    //Si le tableau 'panier' n'existe pas, je le crée
     if (panier === null) {
         panier = [];
     }
-    console.log(panier);
     //Pour lister chaque élément du panier
     for (let i = 0; i < panier.length; i++) {
+        //Appel de la fonction qui récupère des données du panier
         getDataTeddiesBasket(panier[i], i);
-        console.log(panier[i], i);
-        console.log('ok');
     }
 }
 
@@ -23,56 +22,51 @@ function getDataTeddiesBasket(ID, i) {
     fetch(API_URL + ID)
         .then(response => response.json())
         .then(response => {
-            console.log(response);
-            //J'afiche la réponse de l'index(i) positionné dans le tableau
+            //Appel de la fonction qui permet d'afficher les données de chaque élément du tableau
             displayBasket(response, i);
         })
         //Si la requête n'aboutit pas
         .catch(error => {
-            console.error(error)
-            document.getElementById('erreur_serveur').innerHTML = "Suite à un problème de serveur, la requête ne peut aboutir";
-            console.log(document.getElementById('erreur_serveur'));
+            console.error(error);
+            document.getElementById('aucune_connexion').innerHTML = "Il y a eu un problème avec la requête, veuillez nous en excuser";
         })
 }
 
-//Exécute le javascript
+//Chargement dans la fenêtre de navigation et exécution du javascript
 window.onload = initialisation();
 
-//Si le panier est vide
+//Message pour informer que le panier est vide
 if (panier == 0) {
-    let panierVide = document.getElementById('panier_vide');
-    panierVide.innerHTML += "Votre panier est vide !";
-} 
+    document.getElementById('panier_vide').innerHTML += "Votre panier est vide !";
+}
 
-//Pour afficher le contenu du panier/////////////////////////////////////////////////////////////////
+//Affichage du contenu du panier/////////////////////////////////////////////////////////////////
 function displayBasket(ID, i) {
+    let displayTeddy = document.getElementById('result_teddy_selectionne');
+    displayTeddy.innerHTML +=
+        "<div>" +
+        ID.name +
+        "</div>" +
+        "<img width=150px src='" + ID.imageUrl + "'>" +
+        "<div>" +
+        ID.price / 100 + " €" +
+        "</div>" +
+        //(i) est le curseur qui va se positionner sur l'élément pour le supprimer()
+        "<button id='btn_remove_teddy" + i + "'>Supprimer le teddy</button>";
 
-        let displayTeddy = document.getElementById('result_teddy_selectionne');
-        displayTeddy.innerHTML +=
-            "<div>" +
-            ID.name +
-            "</div>" +
-            "<img width=150px src='" + ID.imageUrl + "'>" +
-            "<div>" +
-            ID.price / 100 + " €" +
-            "</div>" +
-            //(i) est le curseur qui va se positionner sur l'élément pour le supprimer()
-            "<button id='btn_remove_teddy" + i + "'>Supprimer le teddy</button>";
-    
-    //J'additionne chacun des prix des éléments du panier pour calculer le total
+    //Addition de chacun des prix des éléments du panier pour calculer le total
     total += ID.price;
-    console.log(total / 100 + " €");
     document.getElementById('result_order').innerHTML = total / 100 + " €";
-    
-    //Je stocke le total dans le localStorage pour le récupérer sur la page commande
+
+    //Stockage du total dans le localStorage pour le récupérer sur la page commande
     localStorage.setItem('TotalOrder', total);
 
-    //Je vérifie si il y a des éléments dans le panier
+    //Vérification qu'il existe des éléments dans le panier
     for (let y = 0; y < panier.length; y++) {
         let element = document.getElementById('btn_remove_teddy' + y);
         //S'il existe un élément dans le panier, je le cible 
         if (element) {
-            //Avec un écouteur d'évènement, au clic j'appelle la fonction pour le supprimer
+            //Avec un écouteur d'évènement, au clic, appel de la fonction pour le supprimer
             element.addEventListener('click', function () {
                 removeTeddy(y);
             })
@@ -80,54 +74,55 @@ function displayBasket(ID, i) {
     }
 }
 
-//Pour supprimer un teddy du panier///////////////////////////////////////////////////////////////////////////
+//Pour supprimer un teddy du panier/////////////////////////////////////////////////
 function removeTeddy(i) {
     panier.splice(i, 1);
-    //Je mets à jour mon panier
+    //Mise à jour du panier
     localStorage.setItem('Panier', JSON.stringify(panier));
-    //Je recharge la page
+    //Rechargement de la page
     document.location.reload(true);
 }
 
-//Pour supprimer le contenu du panier////////////////////////////////////////////////////////////////////////
-
-//Je vais chercher mon bouton 'vider le panier' par son id et je l'active avec l'écouteur d'évènement au clic
+//Pour supprimer le contenu du panier///////////////////////////////////////////////
+//Activation au clic du bouton 'vider le panier' avec l'écouteur d'évènement 
 document.getElementById('vider_panier').addEventListener('click', clearBasket);
 
-function clearBasket(event) {
-    //permet de stopper le comportement par default du button
-    event.preventDefault();
+function clearBasket() {
     //permet de supprimer tous les éléments du panier dans le localStorage
     localStorage.removeItem('Panier');
     //Permet le rechargement de la page
     document.location.reload(true);
 }
 
-/////////////////////////////////////////LE FORMULAIRE///////////////////////////////////////////////////
+/////////////////////////////////////////LE FORMULAIRE///////////////////////////
 
-//VALIDATION DES DONNEES DU FORMULAIRE///////////////////////////////////////////
-
-//Ajout d'un écouteur d'évènement à mon bouton d'envoi
+//Ajout d'un écouteur d'évènement au bouton d'envoi
 document.getElementById('btn_envoi').addEventListener('click', formulaire);
-//Je crée un objet 'contact' 
+//Création d'un objet 'contact' qui contiendra les données du formulaire
 let contact;
 
+//VALIDATION DES DONNEES 
 function formulaire(event) {
+    //Evite le comportement par défault 
     event.preventDefault();
-    //Pour la validation du prénom///////////////////////////////////////////////////////////////
+
+    //Pour la validation du prénom///////////////////////////////////////////////
     let firstNameNoConform = document.getElementById('firstName_no_conform');
     let firstNameValid = /^[A-zÀ-ù-'-\s]{2,30}$/;
+
+    //Si les données ne sont pas saisies ou ne correspondent au Regex prédéfini
     if (firstName === "" || firstNameValid.test(firstName.value) === false) {
         firstNameNoConform.innerHTML = " Veuillez renseigner votre prénom et respecter le format requis";
         return false;
+        //Si tout est correct
     } else {
         firstNameNoConform.innerHTML = " ✔";
     }
 
-    //Pour la validation du nom/////////////////////////////////////////////////////////////////
+    //Pour la validation du nom///////////////////////////////////////////////////
     let lastNameNoConform = document.getElementById('lastName_no_conform');
     let lastNameValid = /^[A-zÀ-ù-'-\s]{2,30}$/;
-    //Si les données ne sont pas saisies ou ne correspondent au Regex prédéfini
+
     if (lastName === "" || lastNameValid.test(lastName.value) === false) {
         lastNameNoConform.innerHTML = " Veuillez renseigner votre nom et respecter le format requis";
         return false;
@@ -135,18 +130,18 @@ function formulaire(event) {
         lastNameNoConform.innerHTML = " ✔";
     }
 
-    //Pour la validation de l'adresse//////////////////////////////////////////////////////////////////////
+    //Pour la validation de l'adresse//////////////////////////////////////////////
     let addressNoConform = document.getElementById('address_no_conform');
     let addressValid = /^[A-zÀ-ù-0-9-'-\s]{2,100}$/;
+
     if (address === "" || addressValid.test(address.value) === false) {
         addressNoConform.innerHTML = " Veuillez renseigner votre adresse et respecter le format requis";
         return false;
     } else {
-        //Si tout est correct
         addressNoConform.innerHTML = " ✔";
     }
 
-    //Pour la validation de la ville//////////////////////////////////////////////////////////////////////
+    //Pour la validation de la ville///////////////////////////////////////////////////
     let cityNoConform = document.getElementById('city_no_conform');
     let cityValid = /^[A-zÀ-ù-'-\s]{2,30}$/;
     if (city === "" || cityValid.test(city.value) === false) {
@@ -158,9 +153,10 @@ function formulaire(event) {
         cityNoConform.innerHTML = " ✔";
     }
 
-    //Pour la validation de l'email/////////////////////////////////////////////////////////////////////////
+    //Pour la validation de l'email/////////////////////////////////////////////////////
     let emailNoConform = document.getElementById('email_no_conform');
     let emailValid = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+
     if (email === "" || emailValid.test(email.value) === false) {
         emailNoConform.innerHTML = " Veuillez renseigner votre email et respecter le format requis";
         return false;
@@ -169,13 +165,11 @@ function formulaire(event) {
     }
 
     if (panier == 0) {
-        let alertPanierVide = document.getElementById('alerte_panier_vide');
-        alertPanierVide.innerHTML = "Veuillez remplir votre panier avant de valider votre commande !";
+        document.getElementById('alerte_panier_vide').innerHTML = "Veuillez remplir votre panier avant de valider votre commande !";
         return false;
     }
 
-    //Si tous les champs du formulaire sont corrects et que le panier n'est pas vide, validation
-    //Dans mon objet 'contact', je récupère les valeurs de chaque champs du formulaire
+    //Dans l'objet 'contact', récupération des valeurs de chaque champs du formulaire
     contact = {
         firstName: document.getElementById('firstName').value,
         lastName: document.getElementById('lastName').value,
@@ -183,27 +177,27 @@ function formulaire(event) {
         city: document.getElementById('city').value,
         email: document.getElementById('email').value
     }
-    // Si toutes les données sont valides, je stocke l'objet "contact" dans le localStorage;
+    // Si toutes les données sont valides, stockage de l'objet "contact" dans le localStorage;
     localStorage.setItem("Contact", JSON.stringify(contact));
 
-    //Je renomme mon panier 'products'
-    //Je récupère mon objet 'contact' et mon tableau 'panier' dans le localStorage
+    //Changement de nom de variable: 'panier' devient 'products'
+    //Récupération de l'objet 'contact' et l'objet 'products' dans le localStorage
     let products = JSON.parse(localStorage.getItem("Panier"));
     contact = JSON.parse(localStorage.getItem("Contact"));
+    //Création d'un objet commande 
     let commande = {
         contact,
         products
     }
-    console.log(commande);
+    //Appel de la fonction qui permet l'envoi de la commande
     sendData(commande);
 }
-
 
 //ENVOI COMMANDE/////////////////////////////////////////////////////////////
 
 function sendData(commande) {
     console.log(commande);
-    //Je crée un objet 'options' avec la méthod POST, le corps (commande) et les headers
+    //Création d'un objet 'options' avec la méthod POST, le body (commande) et les headers
     let options = {
         method: "POST",
         //Corps de la requête transformé en format JSON
@@ -213,9 +207,8 @@ function sendData(commande) {
             "Content-Type": "application/json",
         }
     }
-    //Je transmets l'URL et l'objet 'options' au serveur
+    //Transmission de l'URL et de l'objet 'options' au serveur. Utilisation des promesses
     fetch("http://localhost:3000/api/teddies/order", options)
-        //Utilisation des promesses
         //Dès qu'il y a une réponse (confirmation de la commande), transformation en format JSON
         .then(response => response.json())
         //Avec cette réponse transformée en format JSON
@@ -223,16 +216,15 @@ function sendData(commande) {
             //Demande de suppression du panier et contact du localStorage
             localStorage.removeItem('Panier');
             localStorage.removeItem('Contact');
-            //Je stocke le numéro de commande dans le localStorage
+            //Stockage du numéro de commande dans le localStorage
             localStorage.setItem('orderId', response.orderId);
             console.log(response);
-            //Je renvoie le numéro de commande vers ma page de commande
+            //Renvoi du numéro de commande vers la page de commande
             window.location.replace('./commande.html');
         })
         //Si la requête n'aboutit pas
         .catch(error => {
             console.error(error)
             document.getElementById('erreur_commande').innerHTML = "Suite à un problème de serveur, votre commande n'a pas pu être enregistrée";
-            console.log(document.getElementById('erreur_serveur'));
         })
 };

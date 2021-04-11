@@ -12,15 +12,13 @@ function getTeddy() {
 		//Dès qu'il y a le retour, transformation en format JSON
 		.then(response => response.json())
 		.then(response => {
-			console.log(response);
 			//Appel de la fonction pour afficher le produit
 			displayTeddy(response);
 		})
 		//Si la requête n'aboutit pas
 		.catch(error => {
 			console.error(error)
-			document.getElementById('erreur_serveur').innerHTML = "Suite à un problème de serveur, la requête ne peut aboutir";
-			console.log(document.getElementById('erreur_serveur'));
+			document.getElementById('aucune_connexion').innerHTML = "Il y a eu un problème avec la requête, veuillez nous en excuser";
 		})
 }
 
@@ -46,33 +44,31 @@ function displayTeddy(response) {
 		"<button id='button'>Ajoutez au panier </button>" +
 		"<p id='alerte_ajout_panier'></p>" +
 		"</div>";
-
+	//Récupération de chaque élément du tableau "colors" pour les afficher sous forme de menu déroulant
 	for (let i = 0; i < response.colors.length; i++) {
 		select.innerHTML +=
 			"<option value = '" + response.colors[i] + "'>" + response.colors[i] + "</option>";
 	}
 
 	//Récupération des teddies sélectionnés par l'écouteur d'évènement
-	document.getElementById('button').addEventListener('click', myFonction);
-	function myFonction() {
+	document.getElementById('button').addEventListener('click', function(){
 		//Appel de la fonction addTeddyToBasket pour récupérer le panier et son contenu
 		addTeddyToBasket();
 		document.getElementById("alerte_ajout_panier").innerHTML = "Votre produit a bien été ajouté au panier!";
-	};
+	});
 };
 
 //Création d'une fonction pour stocker les teddies sélectionnés dans le localStorage
 function addTeddyToBasket() {
-
-	//Je transforme la chaine de caractères en tableau JSON pour pouvoir l'exploiter
+	//Transformation de la chaine de caractères en tableau pour pouvoir l'exploiter
 	let panier = JSON.parse(localStorage.getItem('Panier'));
-	//Si panier n'existe pas, je crée un tableau vide
+	//Si le tableau 'panier' n'existe pas, je le crée 
 	if (panier === null) {
 		panier = [];
 	}
 	//Les teddies sélectionnés s'ajoutent
 	panier.push(ID);
-	//Je transforme le tableau en chaine de caractère
+	//Transformation du tableau en chaine de caractère
 	localStorage.setItem('Panier', JSON.stringify(panier));
 };
 

@@ -7,12 +7,10 @@ document.getElementById('presentation').innerHTML +=
 function getAllTeddies() {
 	//Transmision de l'URL au serveur
 	fetch("http://localhost:3000/api/teddies")
-		//Je demande en retour le contenu de l'API (response)
-		//Dès qu'il y a le retour, transformation en format JSON
+		//Dès qu'il y a le retour de la promesse (response), transformation en format JSON
 		.then(response => response.json())
 		.then(response => {
-			console.log(response);
-			//J'appelle ma fonction 'display Teddies' pour afficher ce retour passé en paramètre (response)
+			//Appel de la fonction 'display Teddies' pour afficher ce retour passé en paramètre (response)
 			displayTeddies(response);
 		})
 		//Si il n'y a pas de connexion au serveur
@@ -22,17 +20,16 @@ function getAllTeddies() {
 		})
 }
 
-//Exécute le javascript
+//Permet le chargement de la page dans la fenêtre du navigateur et l'exécution de la fonction
 window.onload = getAllTeddies();
 
-//Récupération de la requête comprenant le nom, l'image, la description et le prix de chaque Teddy
+//Permet l'affichage des éléments passés en paramètre (response)
 function displayTeddies(response) {
 	let section = document.getElementById('teddies');
-	//Parcours de la requête pour récupérer tous les produits
+	//Parcours de l'objet contenant tous les produits 
 	for (let i = 0; i < response.length; i++) {
-		//Ajout d'une balise sémantique 'article' pour séparer chaque produit;
+		//Ajout d'une balise sémantique 'article' pour la mise en page des produits;
 		let teddy = document.createElement('article');
-
 		teddy.innerHTML += "<h3>" +
 			response[i].name +
 			"</h3>" +
