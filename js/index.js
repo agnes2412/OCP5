@@ -13,7 +13,7 @@ function getAllTeddies() {
 			//Appel de la fonction 'display Teddies' pour afficher ce retour passé en paramètre (response)
 			displayTeddies(response);
 		})
-		//Si il n'y a pas de connexion au serveur
+		//Si il n'y a pas de connexion au serveur, message d'erreur
 		.catch(error => {
 			console.error(error)
 			document.getElementById('aucune_connexion').innerHTML = "Il y a eu un problème avec la requête, veuillez nous en excuser";
@@ -28,7 +28,7 @@ function displayTeddies(response) {
 	let section = document.getElementById('teddies');
 	//Parcours de l'objet contenant tous les produits 
 	for (let i = 0; i < response.length; i++) {
-		//Ajout d'une balise sémantique 'article' pour la mise en page des produits;
+		//Ajout d'une balise 'article' pour la mise en page des produits;
 		let teddy = document.createElement('article');
 		teddy.innerHTML += "<h3>" +
 			response[i].name +

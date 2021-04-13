@@ -2,7 +2,7 @@ let API_URL = "http://localhost:3000/api/teddies/";
 let total = 0;
 let panier;
 
-//Récupération des références des teddies sélectionnés du panier dans le localStorage ///////////////////////////////
+//Récupération des références des teddies sélectionnés du panier dans le localStorage
 function initialisation() {
     //Transformation de la chaine de caractères en tableau pour pouvoir l'exploiter
     panier = JSON.parse(localStorage.getItem('Panier'));
@@ -22,10 +22,10 @@ function getDataTeddiesBasket(ID, i) {
     fetch(API_URL + ID)
         .then(response => response.json())
         .then(response => {
-            //Appel de la fonction qui permet d'afficher les données de chaque élément du tableau
+            //Appel de la fonction qui permet d'afficher chaque élément du tableau
             displayBasket(response, i);
         })
-        //Si la requête n'aboutit pas
+        //Si la requête n'aboutit pas, message d'erreur
         .catch(error => {
             console.error(error);
             document.getElementById('aucune_connexion').innerHTML = "Il y a eu un problème avec la requête, veuillez nous en excuser";
@@ -40,10 +40,9 @@ if (panier == 0) {
     document.getElementById('panier_vide').innerHTML += "Votre panier est vide !";
 }
 
-//Affichage du contenu du panier/////////////////////////////////////////////////////////////////
+//Affichage du contenu du panier
 function displayBasket(ID, i) {
-    let displayTeddy = document.getElementById('result_teddy_selectionne');
-    displayTeddy.innerHTML +=
+    document.getElementById('result_teddy_selectionne').innerHTML +=
         "<div>" +
         ID.name +
         "</div>" +
@@ -51,7 +50,7 @@ function displayBasket(ID, i) {
         "<div>" +
         ID.price / 100 + " €" +
         "</div>" +
-        //(i) est le curseur qui va se positionner sur l'élément pour le supprimer()
+        //(i) est le curseur qui va se positionner sur l'élément 
         "<button id='btn_remove_teddy" + i + "'>Supprimer le teddy</button>";
 
     //Addition de chacun des prix des éléments du panier pour calculer le total
@@ -74,7 +73,7 @@ function displayBasket(ID, i) {
     }
 }
 
-//Pour supprimer un teddy du panier/////////////////////////////////////////////////
+//Pour supprimer un teddy du panier
 function removeTeddy(i) {
     panier.splice(i, 1);
     //Mise à jour du panier
@@ -83,16 +82,14 @@ function removeTeddy(i) {
     document.location.reload(true);
 }
 
-//Pour supprimer le contenu du panier///////////////////////////////////////////////
+//Pour supprimer le contenu du panier
 //Activation au clic du bouton 'vider le panier' avec l'écouteur d'évènement 
-document.getElementById('vider_panier').addEventListener('click', clearBasket);
-
-function clearBasket() {
-    //permet de supprimer tous les éléments du panier dans le localStorage
-    localStorage.removeItem('Panier');
-    //Permet le rechargement de la page
-    document.location.reload(true);
-}
+document.getElementById('vider_panier').addEventListener('click', function() {
+     //permet de supprimer tous les éléments du panier dans le localStorage
+     localStorage.removeItem('Panier');
+     //Permet le rechargement de la page
+     document.location.reload(true);
+}) 
 
 /////////////////////////////////////////LE FORMULAIRE///////////////////////////
 

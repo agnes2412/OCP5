@@ -25,7 +25,7 @@ function getTeddy() {
 //Permet le chargement et l'exécution de la fonction
 window.onload = getTeddy();
 
-//Affiche les données de l'élément passé en paramètre (le teddy)
+//Affiche les données de l'objet passé en paramètre (ID)
 function displayTeddy(response) {
 	document.getElementById('affich_teddy_selectionne').innerHTML +=
 		"<div>" +
@@ -46,7 +46,7 @@ function displayTeddy(response) {
 		"</div>";
 	//Récupération de chaque élément du tableau "colors" pour les afficher sous forme de menu déroulant
 	for (let i = 0; i < response.colors.length; i++) {
-		select.innerHTML +=
+		document.getElementById('select').innerHTML +=
 			"<option value = '" + response.colors[i] + "'>" + response.colors[i] + "</option>";
 	}
 
@@ -60,7 +60,7 @@ function displayTeddy(response) {
 
 //Création d'une fonction pour stocker les teddies sélectionnés dans le localStorage
 function addTeddyToBasket() {
-	//Transformation de la chaine de caractères en tableau pour pouvoir l'exploiter
+	//Transformation de la chaine JSON (string) en objet JS pour pouvoir l'exploiter
 	let panier = JSON.parse(localStorage.getItem('Panier'));
 	//Si le tableau 'panier' n'existe pas, je le crée 
 	if (panier === null) {
@@ -68,7 +68,7 @@ function addTeddyToBasket() {
 	}
 	//Les teddies sélectionnés s'ajoutent
 	panier.push(ID);
-	//Transformation du tableau en chaine de caractère
+	//Mise à jour du 'panier' et transformation de l'objet JS en chaine de caractères JSON
 	localStorage.setItem('Panier', JSON.stringify(panier));
 };
 
