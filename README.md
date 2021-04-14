@@ -1,7 +1,9 @@
 # OCP5
 Concevez un site e-commerce,
 
-Projet réalisé par Agnès Leclercq dans le cadre de la formation "Développeur Web" d'OpenClassrooms
+Projet réalisé dans le cadre de la formation "Développeur Web" d'OpenClassrooms
+
+Langages utilisés : HTML, CSS, JavaScript
 
 **************************************************************************************************
 
