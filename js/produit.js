@@ -14,6 +14,7 @@ function getTeddy() {
 		.then(response => {
 			//Appel de la fonction pour afficher le produit
 			displayTeddy(response);
+			console.log(ID);
 		})
 		//Si la requête n'aboutit pas
 		.catch(error => {
