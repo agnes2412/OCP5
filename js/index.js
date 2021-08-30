@@ -1,6 +1,7 @@
+
 //Création des titres de la page d'accueil
 document.getElementById('presentation').innerHTML += 
-'<h1>Orinoco vous présente sa sélection "Oripeluche". Une collection d\'ours en peluche faits à la main.</h1>' +
+'<h1>Orinoco vous présente sa sélection "Oripeluche".</h1>' +
 '<h2>Faites votre choix, personnalisez votre "Teddy" et passez votre commande.</h2>';
 
 //Création d'une fonction "getAllTeddies" pour récupérer les produits de l'API
@@ -37,7 +38,7 @@ function displayTeddies(response) {
 			"<p>" +
 			response[i].description +
 			"</p>" +
-			"<p>" +
+			"<p id='price'>" +
 			response[i].price / 100 + " €" +
 			"</p>" +
 			"<a href='produit.html?id=" + response[i]._id + "'>Voir le produit</a>"

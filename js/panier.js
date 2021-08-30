@@ -43,15 +43,17 @@ if (panier == 0) {
 //Affichage du contenu du panier
 function displayBasket(ID, i) {
     document.getElementById('result_teddy_selectionne').innerHTML +=
-        "<div>" +
-        ID.name +
-        "</div>" +
-        "<img width=150px src='" + ID.imageUrl + "'>" +
-        "<div>" +
+        "<div id='carte_teddy'>" +
+        "<p>" +
+        ID.name + " - " +
         ID.price / 100 + " €" +
-        "</div>" +
+        "</p>" +
+        "<img width=200px src='" + ID.imageUrl + "'>" +
+        "<div>" +
         //(i) est le curseur qui va se positionner sur l'élément 
-        "<button id='btn_remove_teddy" + i + "'>Supprimer le teddy</button>";
+        "<button id='btn_remove_teddy" + i + "'>Supprimer " + ID.name + "</button>"
+    "</div>" +
+        "</div>";
 
     //Vérification qu'il existe des éléments dans le panier
     for (let y = 0; y < panier.length; y++) {

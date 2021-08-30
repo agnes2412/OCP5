@@ -30,19 +30,22 @@ window.onload = getTeddy();
 function displayTeddy(response) {
 	document.getElementById('affich_teddy_selectionne').innerHTML +=
 		"<div>" +
-		"<h3>" +
+		"<h1>" +
 		response.name +
-		"</h3>" +
+		"</h1>" +
 		"<img width=100% src='" + response.imageUrl + "'>" +
 		"<p>" +
 		response.description +
+		"</p>" +
+		"<p>Choisissez la couleur de " +
+		response.name +
 		"</p>" +
 		"<select id='select'>" +
 		"</select>" +
 		"<p>Prix : " +
 		response.price / 100 + " €" +
 		"</p>" +
-		"<button id='button'>Ajoutez au panier </button>" +
+		"<button id='button'>Ajoutez " + response.name + " au panier </button>" +
 		"<p id='alerte_ajout_panier'></p>" +
 		"</div>";
 	//Récupération de chaque élément du tableau "colors" pour les afficher sous forme de menu déroulant
