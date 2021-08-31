@@ -27,7 +27,6 @@ header {
 	justify-content: space-evently;
 	flex-wrap: wrap;
 	margin: auto;
-	padding-top: 50px;
 	max-width: 1230px;
 }
 
@@ -121,7 +120,7 @@ article img {
 
 #presentation h2 {
 	margin: auto;
-	padding: 20px;
+	padding: 50px 0 20px 0;
 	max-width: 1170px;
 	font-size: 1.2em;
 	text-align: center;
@@ -204,6 +203,7 @@ color: rgbargba(82, 33, 83, 0.739);
 
 #result_teddy_selectionne {
 	border: 3px solid rgba(131, 91, 133, 0.739);
+	box-shadow: 5px 5px 5px rgba(75, 71, 75, 0.739);
 	min-height: 60px;
 	display: flex;
 	flex-direction: row;
@@ -254,6 +254,7 @@ color: rgbargba(82, 33, 83, 0.739);
 
 #formulaire {
 	border: 3px solid rgba(131, 91, 133, 0.739);
+	box-shadow: 5px 5px 5px rgba(75, 71, 75, 0.739);
 	max-width: 700px;
 	margin: auto;
 	padding: 10px;
