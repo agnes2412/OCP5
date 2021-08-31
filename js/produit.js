@@ -30,9 +30,9 @@ window.onload = getTeddy();
 function displayTeddy(response) {
 	document.getElementById('affich_teddy_selectionne').innerHTML +=
 		"<div>" +
-		"<h1>" +
+		"<h3>" +
 		response.name +
-		"</h1>" +
+		"</h3>" +
 		"<img width=100% src='" + response.imageUrl + "'>" +
 		"<p>" +
 		response.description +
@@ -58,7 +58,7 @@ function displayTeddy(response) {
 	document.getElementById('button').addEventListener('click', function(){
 		//Appel de la fonction addTeddyToBasket pour récupérer le panier et son contenu
 		addTeddyToBasket();
-		document.getElementById("alerte_ajout_panier").innerHTML = "Votre produit a bien été ajouté au panier!";
+		alert("Votre produit a bien été ajouté au panier !");
 	});
 };
 

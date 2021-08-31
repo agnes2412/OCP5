@@ -10,13 +10,13 @@ function displayConfirmation() {
     let totalOrder = localStorage.getItem('TotalOrder');
     localStorage.removeItem('TotalOrder');
     document.getElementById('confirmation_commande').innerHTML +=
-        "<div>Nous vous remercions pour votre commande !</div>" +
-        "<div>Le total de vos achats est de : " +
+        "<p>Nous vous remercions pour votre confiance !</p>" +
+        "<p>Le total de vos achats est de : " +
         totalOrder / 100 + " €" +
-        "</div>" +
-        "<div>Le numéro de votre confirmation de commande est : " +
-        orderId +
-        "</div>";
+        "</p>" +
+        "<p id='numero_commande'>Veuillez noter le numéro de votre confirmation de commande : " + "<p>" +
+        orderId + "</p>" +
+        "</p>";
 };
 
 //Charge et exécute la fonction
