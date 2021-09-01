@@ -20,12 +20,23 @@ header {
 	margin-left: 3%;
 }
 
+.bloc-page {
+	max-width: 1850px;
+	margin: auto;
+}
+
 #teddies {
 	display: flex;
 	justify-content: space-evently;
 	flex-wrap: wrap;
 	margin: auto;
-	max-width: 1230px;
+	max-width: 1640px;
+}
+
+@media (max-width:1650px) {
+	#teddies {
+		max-width: 1230px;
+	}
 }
 
 @media (max-width:1250px) {
@@ -66,7 +77,7 @@ li {
 	list-style-type: none;
 }
 
-li a {
+a {
 	text-decoration: none;
 	color: black
 }
@@ -109,7 +120,7 @@ article img {
 
 #presentation h1 {
 	margin: 0;
-	padding: 10px 0 ;
+	padding: 10px 0;
 	font-size: 1.6em;
 	text-align: center;
 	background-color: rgba(82, 33, 83, 0.739);
@@ -130,7 +141,7 @@ p {
 
 #produit h2 {
 	margin: 0;
-	padding: 10px 0 ;
+	padding: 10px 0;
 	font-size: 1.6em;
 	text-align: center;
 	background-color: rgba(82, 33, 83, 0.739);
@@ -152,8 +163,8 @@ p {
 }
 
 #affich_teddy_selectionne h3 {
-font-size: 1.4em;
-color: rgbargba(82, 33, 83, 0.739);
+	font-size: 1.4em;
+	color: rgbargba(82, 33, 83, 0.739);
 }
 
 #select {
@@ -191,7 +202,7 @@ color: rgbargba(82, 33, 83, 0.739);
 
 #section_panier h2 {
 	margin: 0;
-	padding: 10px 0 ;
+	padding: 10px 0;
 	font-size: 1.6em;
 	text-align: center;
 	background-color: rgba(82, 33, 83, 0.739);
@@ -314,7 +325,7 @@ button:hover {
 
 #confirmation_commande {
 	border: 5px solid rgba(165, 130, 167, 0.739);
-	background-color:rgba(82, 33, 83, 0.739);
+	background-color: rgba(82, 33, 83, 0.739);
 	margin: auto;
 	max-width: 800px;
 	font-size: 1.3em;
@@ -326,4 +337,28 @@ button:hover {
 
 #numero_commande {
 	margin-top: 100px;
+}
+
+footer {
+	background-color: rgba(237, 224, 238, 0.739);
+	margin-top: 50px;
+	padding-top: 5px;
+}
+
+footer .logo {
+	width: 100px;
+	margin-bottom: -13px;
+	margin-right: 10px;
+}
+
+#contact {
+	background-color: rgba(82, 33, 83, 0.739);
+	text-align: center;
+	cursor: pointer;
+	font-size: 1.2em;
+	padding: 10px 0 20px 0;
+}
+
+#contact a {
+	color: rgba(251, 249, 251, 0.945);
 }

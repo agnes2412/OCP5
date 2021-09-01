@@ -1,8 +1,8 @@
 
 //Création des titres de la page d'accueil
 document.getElementById('presentation').innerHTML += 
-'<h1>Notre sélection "Oripeluche".</h1>' +
-'<h2>Faites votre choix, personnalisez votre "Teddy" et passez votre commande.</h2>';
+'<h1>Notre sélection "Oripeluche"</h1>' +
+'<h2>Faites votre choix, personnalisez votre "Teddy" et passez votre commande</h2>';
 
 //Création d'une fonction "getAllTeddies" pour récupérer les produits de l'API
 function getAllTeddies() {
