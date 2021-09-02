@@ -36,7 +36,7 @@ function displayTeddies(response) {
 		teddy.innerHTML += "<h3>" +
 			response[i].name +
 			"</h3>" +
-			"<img width='100%' src='" + response[i].imageUrl + "'>" +
+			"<img width='100%' alt='ourson en peluche' src='" + response[i].imageUrl + "'>" +
 			"<p>" +
 			response[i].description +
 			"</p>" +
