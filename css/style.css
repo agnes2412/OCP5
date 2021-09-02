@@ -21,7 +21,7 @@ header {
 }
 
 .bloc-page {
-	max-width: 1850px;
+	max-width: 2000px;
 	margin: auto;
 }
 
@@ -216,7 +216,7 @@ p {
 	min-height: 60px;
 	display: flex;
 	flex-direction: row;
-	justify-content: space-evently;
+	justify-content: space-between;
 	padding: 0 10px 0 10px;
 	flex-wrap: wrap;
 	margin-top: -55px;
@@ -312,8 +312,16 @@ button:hover {
 }
 
 #aucune_connexion {
-	font-size: 2em;
-	color: red;
+	font-size: 1.5em;
+	color: rgb(190, 8, 8);
+	max-width: 750px;
+	margin: auto;
+	padding: 20px;
+	font-weight: bold;
+}
+
+#lien {
+	color: rgba(82, 33, 83, 0.739);
 }
 
 #btn_envoi {

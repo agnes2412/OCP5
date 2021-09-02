@@ -6,6 +6,8 @@ document.getElementById('presentation').innerHTML +=
 
 //Création d'une fonction "getAllTeddies" pour récupérer les produits de l'API
 function getAllTeddies() {
+	let texteErreur = "ICI";
+	let lien = 'https://github.com/agnes2412/OCP5';
 	//Transmision de l'URL au serveur
 	fetch("http://localhost:3000/api/teddies")
 		//Dès qu'il y a le retour de la promesse (response), transformation en format JSON
@@ -16,8 +18,8 @@ function getAllTeddies() {
 		})
 		//Si il n'y a pas de connexion au serveur, message d'erreur
 		.catch(error => {
-			console.error(error)
-			document.getElementById('aucune_connexion').innerHTML = "Il y a eu un problème avec la requête, veuillez nous en excuser";
+			console.error(error);
+			document.getElementById('aucune_connexion').innerHTML = "Il y a eu un problème avec la requête. Pour accéder à ce projet, veuillez cliquer " + "<span id='lien'>" + texteErreur.link(lien) + "." + "</span>" + " Merci.";
 		})
 }
 
