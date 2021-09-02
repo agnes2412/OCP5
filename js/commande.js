@@ -1,4 +1,3 @@
-document.getElementById('titre').innerHTML += "<h1>Votre commande</h1>";
 let API_URL = "http://localhost:3000/api/teddies/";
 
 //Affichage du numéro de confirmation de la commande

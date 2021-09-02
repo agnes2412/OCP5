@@ -148,6 +148,15 @@ p {
 	color: white;
 }
 
+#commande h2 {
+	margin: 0;
+	padding: 10px 0;
+	font-size: 1.6em;
+	text-align: center;
+	background-color: rgba(82, 33, 83, 0.739);
+	color: white;
+}
+
 #container_teddy_selectionne p {
 	font-size: 1.3em;
 }
@@ -306,6 +315,7 @@ button {
 
 button:hover {
 	box-shadow: inset 2px 2px 2px black;
+	background-color: rgba(155, 60, 156, 0.739);;
 }
 
 #aucune_connexion {
@@ -329,8 +339,8 @@ button:hover {
 }
 
 #confirmation_commande {
-	border: 5px solid rgba(165, 130, 167, 0.739);
 	background-color: rgba(82, 33, 83, 0.739);
+	box-shadow: 5px 5px 3px rgba(27, 26, 27, 0.739);
 	margin: auto;
 	max-width: 800px;
 	font-size: 1.3em;
