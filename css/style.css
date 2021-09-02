@@ -23,6 +23,7 @@ header {
 .bloc-page {
 	max-width: 2000px;
 	margin: auto;
+	background-image: url(img/fond.jpg);
 }
 
 #teddies {
@@ -349,6 +350,7 @@ button:hover {
 	text-align: center;
 	padding: 100px 20px;
 	margin-top: 100px;
+	margin-bottom: 100px;
 }
 
 #numero_commande {
