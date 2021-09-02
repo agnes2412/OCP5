@@ -31,6 +31,7 @@ header {
 	flex-wrap: wrap;
 	margin: auto;
 	max-width: 1640px;
+	margin-top: -50px;
 }
 
 @media (max-width:1650px) {
@@ -129,7 +130,7 @@ article img {
 
 #presentation h2 {
 	margin: auto;
-	padding: 50px 0 20px 0;
+	padding: 40px 0 20px 0;
 	max-width: 1170px;
 	font-size: 1.2em;
 	text-align: center;
