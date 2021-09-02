@@ -48,7 +48,7 @@ function displayBasket(ID, i) {
         ID.name + " - " +
         ID.price / 100 + " €" +
         "</p>" +
-        "<img src='" + ID.imageUrl + "'>" +
+        "<img src='" + ID.imageUrl + "' alt='ourson en peluche'>" +
         "<div>" +
         //(i) est le curseur qui va se positionner sur l'élément 
         "<button id='btn_remove_teddy" + i + "'>Supprimer " + ID.name + "</button>"
