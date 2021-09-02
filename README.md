@@ -7,6 +7,7 @@ Projet réalisé dans le cadre de la formation "Développeur Web" d'OpenClassroo
 Langages utilisés : HTML, CSS, JavaScript
 **************************************************************************************************
 Ce projet représente le MVP d'un site e-commerce. Il est demandé :  
+  
 ● une page de vue sous forme de liste, montrant tous les articles disponibles
 à la vente ;  
 ● une page “produit”, qui affiche de manière dynamique l'élément
