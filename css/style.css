@@ -222,18 +222,15 @@ p {
 	margin-top: -55px;
 }
 
-@media (max-width: 610px) {
+@media (max-width: 700px) {
 	#result_teddy_selectionne {
-		display: flex;
-		flex-direction: row;
 		justify-content: space-around;
 		padding: 10px 10px 0 10px;
-		flex-wrap: wrap;
 	}
 }
 
 #carte_teddy {
-	margin: 20px;
+	margin: 15px;
 }
 
 #carte_teddy button {
