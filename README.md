@@ -1,6 +1,4 @@
 # OCP5
-
-**************************************************************************************************
 La visualisation de ce projet nécessite l'installation de la partie back-end dont vous trouverez toutes les consignes sur le lien suivant :
 https://github.com/OpenClassrooms-Student-Center/JWDP5#orinoco
 **************************************************************************************************
